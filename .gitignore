@@ -1,55 +1,75 @@
-# =========================
+# ============================================================
+
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
 
-# =========================
 dist/
 build/
 out/
+.next/
+.cache/
+
 *.tsbuildinfo
+tsconfig.tsbuildinfo
 
-# =========================
-/.next/
-/out/
-/build/
-/.vite/
-
-# =========================
 logs/
 *.log
 *.log.*
-*.gz
+debug.log
+error.log
 
-# =========================
-.cache/
-.next/cache/
-.vscode/.cache/
-.tmp/
-temp/
+.env
+.env.*
+.env.local
+.env.development
+.env.production
+.env.test
 
-# =========================
-dist/
-build/
-
-# =========================
-coverage/
-*.lcov
-
-# =========================
-.vscode/
-.history/
-
-# =========================
 .DS_Store
 Thumbs.db
 
-# =========================
-.env
-.env.*
-!.env.example
+# ============================================================
+
+/backend/node_modules/
+/backend/dist/
+/backend/build/
+/backend/*.log
+/backend/uploads/
+/backend/tmp/
+
+backend/prisma/dev.db
+backend/prisma/*.db-journal
+
+# ============================================================
+
+/frontend/node_modules/
+/frontend/dist/
+/frontend/build/
+/frontend/.vite/
+/frontend/.cache/
+
+frontend/**/*.cache
+
+# ============================================================
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+.history/
+
+# ============================================================
+
+# 
+.eslintcache
+.prettiercache
+
+#
+.idea/
+*.swp
+*.swo
