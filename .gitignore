@@ -15,7 +15,6 @@ out/
 *.tsbuildinfo
 
 # =========================
-# Arquivos de build
 /.next/
 /out/
 /build/
