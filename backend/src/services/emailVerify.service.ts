@@ -50,11 +50,11 @@ Obrigado.`,
   }
 }
 
-export async function verifyToken(token: string) {
+export const verifyToken = async (token: string) => {
   try {
     const decoded = await tokenUtil.verify(token);
     return { success: true, decoded };
   } catch (err) {
     return { success: false, error: err };
   }
-}
+};
