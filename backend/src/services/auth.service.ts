@@ -4,7 +4,7 @@ import * as tokenUtil from "../utils/token.util";
 import { userRegister } from "../models/userRegister.model";
 import { userLogin } from "../models/userLogin.model";
 import { PrismaClient } from "@prisma/client";
-import { emailVerify } from "../services/emailVerify.service";
+import * as vermail from "../services/emailVerify.service";
 import { tokenPayload } from "../models/tokenPayload.model";
 
 const prisma = new PrismaClient();
@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 export async function register(dto: userRegister) {
   try {
     const hashed = await encrypt(dto.password);
-    const mail = await emailVerify(dto.gmail);
+    const mail = await vermail.emailSender(dto.gmail);
 
     const user = await prisma.user.create({
       data: {
@@ -30,7 +30,14 @@ export async function register(dto: userRegister) {
 
     console.log(JSON.stringify({ user, token }, null, 2));
 
-    return user;
+    return {
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.gmail
+      },
+      token,
+    };
   } catch (error) {
     console.log(error);
     throw error;

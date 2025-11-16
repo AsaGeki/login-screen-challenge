@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function emailVerify(email: string) {
+export async function emailSender(email: string) {
   const token = tokenUtil.generate({ email });
 
   try {
@@ -47,5 +47,14 @@ Obrigado.`,
   } catch (error) {
     console.error("Erro ao enviar Email:", error);
     throw new Error("Falha ao enviar email de verificação");
+  }
+}
+
+export async function verifyToken(token: string) {
+  try {
+    const decoded = await tokenUtil.verify(token);
+    return { success: true, decoded };
+  } catch (err) {
+    return { success: false, error: err };
   }
 }

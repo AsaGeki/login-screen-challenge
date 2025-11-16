@@ -1,12 +1,12 @@
 import express from "express"
 import userRoutes from "./routes/user.route"
-import verificationRoutes from "./routes/verification.route";
+import verifyRoutes from "./routes/emailVerify.route";
 
 const app = express();
 app.use(express.json())
 
 app.use("/user", userRoutes)
-app.use("/verification", verificationRoutes)
+app.use("/verify", verifyRoutes)
 
 app.get("/", (req, res)=>{
     return res.status(302).json({

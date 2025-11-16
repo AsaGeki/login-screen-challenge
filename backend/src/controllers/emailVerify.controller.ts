@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { verifyEmail } from "../services/verifyEmail.service";
+import * as vermail from "../services/emailVerify.service";
 
 export default {
   async verifyEmail(req: Request, res: Response) {
     const token = req.params.token;
-    const verification = await verifyEmail(token);
+    const verification = await vermail.verifyToken(token);
 
     if (!verification.success) {
       return res.status(400).send("Email não verificado");
