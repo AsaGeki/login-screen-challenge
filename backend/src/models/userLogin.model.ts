@@ -1,8 +1,9 @@
-import zod from "zod";
+// userRegister.model.ts
+import { z } from "zod";
 
-export const userSchema = zod.object({
-    username: zod.string().min(4).max(20).regex(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9_-]+$/),
-    password: zod.string().min(4)
+export const userLogin = z.object({
+  username: z.string().regex(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9_-]+$/, "username contém caracteres inválidos"),
+  password: z.string()
 });
 
-export type userLogin = zod.infer<typeof userSchema>;
+export type userLogin = z.infer<typeof userLogin>;

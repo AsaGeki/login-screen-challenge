@@ -12,5 +12,5 @@ model User {
     username String   @unique
     gmail    String   @unique
     password String
-    updateAt DateTime @updatedAt
+    updateAt DateTime @updatedAt @default(now())
 }

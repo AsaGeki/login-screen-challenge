@@ -19,7 +19,6 @@ export async function register(dto: userRegister) {
         username: dto.username,
         gmail: dto.gmail,
         password: hashed,
-        updateAt: new Date(),
       },
     });
 
@@ -32,7 +31,6 @@ export async function register(dto: userRegister) {
     console.log(JSON.stringify({ user, token }, null, 2));
 
     return user;
-
   } catch (error) {
     console.log(error);
     throw error;
@@ -58,7 +56,6 @@ export async function login(dto: userLogin) {
     const token: string = tokenUtil.generate(payload);
 
     return { user, token };
-
   } catch (error) {
     console.log(error);
     throw error;

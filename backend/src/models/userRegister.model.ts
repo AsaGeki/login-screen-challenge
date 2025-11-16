@@ -1,14 +1,16 @@
-import zod from "zod";
+import { z } from "zod";
 
-export const userSchema = zod.object({
-  username: zod
+export const userRegister = z.object({
+  username: z
     .string()
-    .min(4)
-    .max(20)
-    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9_-]+$/),
-  gmail: zod.string().email().toLowerCase(),
-  password: zod.string().min(4),
-  createDate: zod.date(),
+    .min(4, "username deve ter pelo menos 4 caracteres")
+    .max(20, "username deve ter no máximo 20 caracteres")
+    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9_-]+$/, "username contém caracteres inválidos"),
+  gmail: z
+    .string()
+    .email("email inválido")
+    .transform((s) => s.toLowerCase()),
+  password: z.string().min(4, "password deve ter pelo menos 4 caracteres"),
 });
 
-export type userRegister = zod.infer<typeof userSchema>;
+export type userRegister = z.infer<typeof userRegister>;
