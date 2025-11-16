@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import userController  from "../controllers/user.controller"
-import { validade } from '../middleware/validade.middleware';
+import { validade } from '../middlewares/validade.middleware';
 import { userRegister } from '../models/userRegister.model';
 import { userLogin } from '../models/userLogin.model';
 

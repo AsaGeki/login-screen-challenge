@@ -1,11 +1,10 @@
 import { z } from "zod";
 
-export const tokenPayload = z.object({
-  id: z.number(),
+export const tokenEmail = z.object({
   email: z
     .string()
     .email("email inválido")
     .transform((s) => s.toLowerCase()),
 });
 
-export type tokenPayload = z.infer<typeof tokenPayload>;
+export type tokenEmail = z.infer<typeof tokenEmail>;

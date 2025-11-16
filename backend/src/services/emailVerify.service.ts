@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function emailSender(email: string) {
-  const token = tokenUtil.generate({ email });
+  const token = tokenUtil.mailGen({ email });
 
   try {
     const info = await transporter.sendMail({

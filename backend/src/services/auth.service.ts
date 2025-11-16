@@ -6,6 +6,7 @@ import { userLogin } from "../models/userLogin.model";
 import { PrismaClient } from "@prisma/client";
 import * as vermail from "../services/emailVerify.service";
 import { tokenPayload } from "../models/tokenPayload.model";
+import { AppError } from "../utils/appError.util";
 
 const prisma = new PrismaClient();
 
@@ -24,7 +25,7 @@ export async function register(dto: userRegister) {
 
     const payload: tokenPayload = {
       id: user.id,
-      gmail: user.gmail,
+      email: user.gmail,
     };
     const token: string = tokenUtil.generate(payload);
 
@@ -34,7 +35,7 @@ export async function register(dto: userRegister) {
       user: {
         id: user.id,
         username: user.username,
-        email: user.gmail
+        email: user.gmail,
       },
       token,
     };
@@ -51,14 +52,14 @@ export async function login(dto: userLogin) {
     const user = await prisma.user.findUnique({
       where: { username: dto.username },
     });
-    if (!user) throw new Error("usuario ou senha incorretos.");
+    if (!user) throw new AppError("usuario ou senha incorretos.", 401);
 
-    const joke = await comparePassword(dto.password, user.password);
-    if (!joke) throw new Error("usuario ou senha incorretos.");
+    const password = await comparePassword(dto.password, user.password);
+    if (!password) throw new AppError("usuario ou senha incorretos.", 401);
 
     const payload: tokenPayload = {
       id: user.id,
-      gmail: user.gmail,
+      email: user.gmail,
     };
     const token: string = tokenUtil.generate(payload);
 
