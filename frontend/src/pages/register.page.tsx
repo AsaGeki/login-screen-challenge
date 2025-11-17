@@ -3,11 +3,11 @@ import { api } from "../api/http";
 import Input from "../components/input.component";
 import { useNavigate } from "react-router-dom";
 
-type RegisterForm = { username: string; email: string; password: string };
+type RegisterForm = { username: string; gmail: string; password: string };
 
 export default function Register() {
   const navigate = useNavigate();
-  const [form, setForm] = useState<RegisterForm>({ username: "", email: "", password: "" });
+  const [form, setForm] = useState<RegisterForm>({ username: "", gmail: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,7 +15,7 @@ export default function Register() {
     e.preventDefault();
     setError(null);
 
-    if (!form.username || !form.email || !form.password) {
+    if (!form.username || !form.gmail || !form.password) {
       setError("Preencha todos os campos.");
       return;
     }
@@ -24,7 +24,7 @@ export default function Register() {
     try {
       const res = await api.post("/user/register", form);
       if (res.status === 201 || res.status === 200) {
-        navigate("/login");
+        navigate("/user/login");
       } else {
         setError("Resposta inesperada do servidor.");
       }
@@ -49,8 +49,8 @@ export default function Register() {
         <Input
           label="Email"
           type="email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          value={form.gmail}
+          onChange={(e) => setForm({ ...form, gmail: e.target.value })}
         />
 
         <Input

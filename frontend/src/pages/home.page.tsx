@@ -5,10 +5,10 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("Token");
+    const token = localStorage.getItem("token");
 
     if (!token) {
-      navigate("/login");
+      navigate("/user/login");
     }
   }, []);
   return (

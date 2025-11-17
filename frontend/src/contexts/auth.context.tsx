@@ -19,7 +19,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (token) localStorage.setItem("token", token);
-    else localStorage.removeItem("Token");
+    else localStorage.removeItem("token");
   }, [token]);
 
   function logout() {

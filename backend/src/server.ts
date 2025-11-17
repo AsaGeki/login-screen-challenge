@@ -11,17 +11,18 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use(logger);
 
-app.use("/api/user", userRoutes);
-app.use("/api/verify", verifyRoutes);
-
-app.get("/", (req, res) => {
-  res.send("API funcionando com TypeScript!");
-});
+app.use("/user", userRoutes);
+app.use("/verify", verifyRoutes);
 
 app.use(errorHandler);
 
