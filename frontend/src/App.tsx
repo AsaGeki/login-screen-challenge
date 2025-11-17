@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/user"
+          path="/"
           element={
             <PrivateRoute>
               <Home />
@@ -17,8 +17,8 @@ function App() {
           }
         />
 
-        <Route path="/user/login" element={<Login />} />
-        <Route path="/user/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );

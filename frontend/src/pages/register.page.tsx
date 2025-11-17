@@ -22,9 +22,9 @@ export default function Register() {
 
     setLoading(true);
     try {
-      const res = await api.post("/user/register", form);
+      const res = await api.post("/register", form);
       if (res.status === 201 || res.status === 200) {
-        navigate("/user/login");
+        navigate("/login");
       } else {
         setError("Resposta inesperada do servidor.");
       }

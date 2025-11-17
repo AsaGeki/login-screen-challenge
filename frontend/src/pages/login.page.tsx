@@ -42,7 +42,7 @@ export default function Login() {
         <button type="submit">Entrar</button>
       </form>
 
-      <a href="http://localhost:5173/user/register">Registrar</a>
+      <a href="http://localhost:5173/register">Registrar</a>
 
     </div>
   );

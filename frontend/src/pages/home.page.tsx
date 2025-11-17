@@ -8,7 +8,7 @@ function Home() {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      navigate("/user/login");
+      navigate("/login");
     }
   }, []);
   return (
