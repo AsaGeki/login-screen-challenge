@@ -10,11 +10,17 @@ export const generate = (payload: tokenPayload): string => {
 };
 
 export const mailGen = (payload: tokenEmail): string => {
-  return jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "1h" }) as string;
+  return jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "5min" }) as string;
 };
 
 export const verify = (token: string): tokenPayload => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
   return tokenPayload.parse(decoded);
+};
+
+export const verifyEmail = (token: string): tokenEmail => {
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+
+  return tokenEmail.parse(decoded);
 };

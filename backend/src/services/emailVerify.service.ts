@@ -1,7 +1,12 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import * as tokenUtil from "../utils/token.util";
+import { PrismaClient } from "@prisma/client";
+import jwt from "jsonwebtoken";
+import { email } from "zod";
+import { AppError } from "../utils/appError.util";
 
+const prisma = new PrismaClient();
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
@@ -27,7 +32,7 @@ Por favor, clique no link abaixo para verificar.
 Obrigado.`,
       html: `
         <p>Olá! Clique no botão abaixo para verificar seu e-mail:</p>
-        <a href="http://localhost:5000/verify/${token}" 
+        <a href="http://localhost:5000/api/verify/${token}" 
            style="
               display:inline-block;
               padding:10px 18px;
@@ -52,9 +57,36 @@ Obrigado.`,
 
 export const verifyToken = async (token: string) => {
   try {
-    const decoded = await tokenUtil.verify(token);
+    const decoded = tokenUtil.verifyEmail(token) as { email: string };
+    console.log("VerifyToken")
+    console.log(decoded)
+
+    if (!decoded || !decoded.email) {
+      throw new AppError("Token Invalidado", 401);
+    }
+    const user = await prisma.user.update({
+      where: { gmail: decoded.email },
+      data: { status: true },
+    });
+
     return { success: true, decoded };
   } catch (err) {
     return { success: false, error: err };
   }
 };
+
+// export const verifyToken = async (token: string) => {
+//   try {
+//     const decoded = await tokenUtil.verify(token);
+//     const user: string = await jwt.decode(token)
+//     const status = await prisma.user.update({
+//       where: { user.email },
+//       data: { status: true }
+//     })
+
+//     return { success: true, decoded };
+
+//   } catch (err) {
+//     return { success: false, error: err };
+//   }
+// };
