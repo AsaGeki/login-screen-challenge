@@ -32,7 +32,7 @@ Por favor, clique no link abaixo para verificar.
 Obrigado.`,
       html: `
         <p>Olá! Clique no botão abaixo para verificar seu e-mail:</p>
-        <a href="http://localhost:5000/api/verify/${token}" 
+        <a href="http://localhost:5000/verify/${token}" 
            style="
               display:inline-block;
               padding:10px 18px;
@@ -64,10 +64,10 @@ export const verifyToken = async (token: string) => {
     if (!decoded || !decoded.email) {
       throw new AppError("Token Invalidado", 401);
     }
-    const user = await prisma.user.update({
-      where: { gmail: decoded.email },
-      data: { status: true },
-    });
+    // const user = await prisma.users.update({
+    //   where: { email: decoded.email },
+    //   data: { status: true },
+    // });
 
     return { success: true, decoded };
   } catch (err) {

@@ -15,17 +15,17 @@ export async function register(dto: userRegister) {
     const hashed = await encrypt(dto.password);
     const mail = await vermail.emailSender(dto.gmail);
 
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
       data: {
         username: dto.username,
-        gmail: dto.gmail,
+        email: dto.gmail,
         password: hashed,
       },
     });
 
     const payload: tokenPayload = {
-      id: user.id,
-      email: user.gmail,
+      id: user.user_id,
+      email: user.email,
     };
     const token: string = tokenUtil.generate(payload);
 
@@ -33,9 +33,9 @@ export async function register(dto: userRegister) {
 
     return {
       user: {
-        id: user.id,
+        id: user.user_id,
         username: user.username,
-        email: user.gmail,
+        email: user.email,
       },
       token,
     };
@@ -49,7 +49,7 @@ export async function register(dto: userRegister) {
 
 export async function login(dto: userLogin) {
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
       where: { username: dto.username },
     });
     if (!user) throw new AppError("usuario ou senha incorretos.", 401);
@@ -58,8 +58,8 @@ export async function login(dto: userLogin) {
     if (!password) throw new AppError("usuario ou senha incorretos.", 401);
 
     const payload: tokenPayload = {
-      id: user.id,
-      email: user.gmail,
+      id: user.user_id,
+      email: user.email,
     };
     const token: string = tokenUtil.generate(payload);
 
