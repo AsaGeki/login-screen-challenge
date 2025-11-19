@@ -19,7 +19,7 @@ export const login = async (dto: loginModel) => {
 
     const payload: tokenPayload = {
       id: user.id,
-      username: user.email,
+      username: user.username,
     };
     const token: string = generate.user(payload);
 

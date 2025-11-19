@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home.page";
 import Login from "./pages/login.page";
 import Register from "./pages/register.page";
@@ -8,8 +8,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Navigate to="/index" />} />
         <Route
-          path="/"
+          path="/index"
           element={
             <PrivateRoute>
               <Home />
