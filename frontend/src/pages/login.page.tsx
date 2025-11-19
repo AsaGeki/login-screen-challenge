@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     username: "",
@@ -13,17 +14,24 @@ export default function Login() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    try {
+      const res = await api.post("/login", form);
+      if (res.status === 201 || res.status === 200) {
+        localStorage.setItem("token", res.data.token);
 
-    const response = await api.post("/login", form);
-    localStorage.setItem("token", response.data.token);
-
-    navigate("/index");
+        navigate("/index");
+      } else {
+        setError("Resposta inesperada do servidor.");
+      }
+    } catch (err: any) {
+      setError(err?.response?.data?.message || "Erro ao logar.");
+    }
   }
 
   return (
     <div>
       <h1>Login</h1>
-
+      {error && <div role="alert">{error}</div>}
       <form onSubmit={handleSubmit}>
         <Input
           label="Username"
@@ -43,7 +51,6 @@ export default function Login() {
       </form>
 
       <a href="http://localhost:5173/register">Registrar</a>
-
     </div>
   );
 }

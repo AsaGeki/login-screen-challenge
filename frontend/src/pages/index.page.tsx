@@ -7,23 +7,24 @@ interface User {
   username: string;
   email: string;
 }
-function Home() {
+function Index() {
   const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>([]);
-
   useEffect(() => {
     const token = localStorage.getItem("token");
+    
+    api.get("/index")
+    .then((res) => setUsers(res.data))
+    .catch((err) => {
+      console.error("Erro ao buscar usuários:", err);
 
-    if (!token) {
-      navigate("/login");
-      return;
-    }
+      if (err.response?.status === 401) {
+        navigate("/login");
+      }
+    });
 
-    api
-      .get("/index")
-      .then((res) => setUsers(res.data))
-      .catch((err) => console.error("Erro ao buscar usuários:", err));
-  }, []);
+}, []);
+
 
   return (
     <div>
@@ -43,4 +44,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Index;

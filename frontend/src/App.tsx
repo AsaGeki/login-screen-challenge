@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/home.page";
+import Index from "./pages/index.page";
 import Login from "./pages/login.page";
 import Register from "./pages/register.page";
 import PrivateRoute from "./routes/private.route";
@@ -13,7 +13,7 @@ function App() {
           path="/index"
           element={
             <PrivateRoute>
-              <Home />
+              <Index />
             </PrivateRoute>
           }
         />
