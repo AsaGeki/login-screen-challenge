@@ -29,27 +29,3 @@ export const login = async (dto: loginModel) => {
     throw err;
   }
 };
-
-// export async function login(dto: loginModel) {
-//   try {
-//     const user = await prisma.users.findUnique({
-//       where: { username: dto.username },
-//     });
-//     if (!user) throw new AppError("usuario ou senha incorretos.", 401);
-
-//     const password = await comparePassword(dto.password, user.password);
-//     if (!password) throw new AppError("usuario ou senha incorretos.", 401);
-
-//     const payload: tokenPayload = {
-//       id: user.user_id,
-//       email: user.email,
-//     };
-//     const token: string = tokenUtil.generate(payload);
-
-//     return { user, token };
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   } finally {
-//     await prisma.$disconnect();
-//   }

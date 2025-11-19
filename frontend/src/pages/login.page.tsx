@@ -17,7 +17,7 @@ export default function Login() {
     const response = await api.post("/login", form);
     localStorage.setItem("token", response.data.token);
 
-    navigate("/index");
+    navigate("/");
   }
 
   return (

@@ -11,6 +11,11 @@ export const verifyEmail = async (token: string) => {
     console.log(decoded);
 
     if (!decoded || !decoded.email || !decoded.username) {
+      const deletes = await prisma.temporary_user.delete({
+        where: {
+          email: decoded.email,
+        },
+      });
       throw new AppError("Token Invalidado", 401);
     }
     const tempUser = await prisma.temporary_user.findUnique({
@@ -18,6 +23,10 @@ export const verifyEmail = async (token: string) => {
         email: decoded.email,
       },
     });
+
+    if (!tempUser) {
+      throw new AppError("Usuário temporário não encontrado", 400);
+    }
 
     const user = await prisma.users.create({
       data: {
@@ -41,7 +50,7 @@ export const verifyEmail = async (token: string) => {
       create: user.createdAt,
     };
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return { success: false, error: err };
   }
 };

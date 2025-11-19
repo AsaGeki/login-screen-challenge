@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/index"
+          path="/"
           element={
             <PrivateRoute>
               <Home />
