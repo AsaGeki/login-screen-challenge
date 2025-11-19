@@ -4,6 +4,7 @@ dotenv.config();
 import { createTransport } from "nodemailer";
 import * as generate from "../utils/generate.util";
 import { tokenEmail } from "../models/tokenEmail.model";
+import { AppError } from "../utils/appError.util";
 
 const transporter = createTransport({
   host: "smtp.gmail.com",
@@ -26,8 +27,8 @@ export const mail = async (dto: tokenEmail) => {
       from: `"Arthur Gabriel" <${process.env.SMTP_USER}>`,
       to: dto.email,
       subject: "Verificação de Email",
-      text: `Olá! Você visitou nosso site e inseriu seu e-mail.
-Por favor, clique no link abaixo para verificar.
+      text: `Olá! Você visitou meu site e inseriu seu e-mail.
+Por favor, clique no link abaixo para verificar sua conta.
 Obrigado.`,
       html: `
         <p>Olá! Clique no botão abaixo para verificar seu e-mail:</p>
@@ -50,6 +51,6 @@ Obrigado.`,
     return info;
   } catch (error) {
     console.error("Erro ao enviar Email:", error);
-    throw new Error("Falha ao enviar email de verificação");
+    throw new AppError("Falha ao enviar email de verificação", 400);
   }
 };

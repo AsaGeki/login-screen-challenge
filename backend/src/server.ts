@@ -7,10 +7,10 @@ import cors from "cors";
 import errorHandler from "./middlewares/error.middleware";
 import { logger } from "./middlewares/logger.middleware";
 
-import login from "./routes/login.route"
-import register from "./routes/register.route"
-import verifyEmail from "./routes/verifyEmail.route"
-import index from "./routes/index.route"
+import login from "./routes/login.route";
+import register from "./routes/register.route";
+import verifyEmail from "./routes/verifyEmail.route";
+import index from "./routes/index.route";
 
 const app = express();
 
@@ -25,12 +25,12 @@ app.use(express.json());
 
 app.use(logger);
 
+app.use(errorHandler);
+
 app.use("/", login);
 app.use("/", register);
 app.use("/verify", verifyEmail);
-app.use("/", index)
-
-app.use(errorHandler);
+app.use("/", index);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

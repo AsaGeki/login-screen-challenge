@@ -14,4 +14,4 @@ export default function errorHandler(err: Error, req: Request, res: Response, ne
   return res.status(500).json({
     message: "Erro interno do servidor.",
   });
-}
+};

@@ -1,14 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import * as validade from "../utils/validate.util";
 import { AppError } from "../utils/appError.util";
-import { email } from "zod";
 
 const prisma = new PrismaClient();
 
 export const verifyEmail = async (token: string) => {
   try {
     const decoded = validade.email(token);
-    console.log(decoded);
+    //console.log(decoded);
 
     if (!decoded || !decoded.email || !decoded.username) {
       const deletes = await prisma.temporary_user.delete({
