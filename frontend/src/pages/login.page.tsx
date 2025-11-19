@@ -14,10 +14,10 @@ export default function Login() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    const response = await api.post("/user/login", form);
+    const response = await api.post("/login", form);
     localStorage.setItem("token", response.data.token);
 
-    navigate("/");
+    navigate("/index");
   }
 
   return (

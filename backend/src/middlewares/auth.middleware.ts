@@ -1,25 +1,38 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../utils/appError.util";
-import * as tokenUtil from "../utils/token.util";
+import * as validate from "../utils/validate.util";
 
-export default function authenticate(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+declare global {
+  namespace Express {
+    interface Request {
+      userId?: number;
+    }
+  }
+}
+
+
+export default async function authenticate(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader?.startsWith("Bearer ")) {
-    throw new AppError("Token não fornecido ou mal formatado", 401);
+  if (!authHeader) {
+    return next(new AppError("Token não fornecido", 401));
   }
 
-  const token = authHeader.split(" ")[1];
+  const parts = authHeader.split(" ");
+  if (parts.length !== 2 || parts[0].toLowerCase() !== "bearer") {
+    return next(new AppError("Token mal formado", 401));
+  }
+
+  const token = parts[1];
 
   try {
-    const decoded = tokenUtil.verify(token);
+    const decoded = await validate.user(token);
+    if (!decoded || !decoded.id) {
+      return next(new AppError("Token inválido", 401));
+    }
     req.userId = decoded.id;
     return next();
-  } catch {
-    throw new AppError("Token inválido ou expirado", 403);
+  } catch (err: any) {
+    return next(new AppError("Token inválido ou expirado", 401));
   }
 }

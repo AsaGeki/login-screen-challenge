@@ -1,23 +1,22 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
 generator client {
     provider = "prisma-client-js"
 }
 
-datasource db {
-    provider  = "postgres"
-    url       = env("DATABASE_URL")
-    directUrl = env("DIRECT_URL")
-}
-
 model users {
-    user_id Int @id @default(autoincrement())
-    username String @unique
-    email String @unique
-    password String
+    id        Int      @id @default(autoincrement())
+    username  String   @unique
+    email     String   @unique
+    password  String
     createdAt DateTime @default(now())
 }
 
 model temporary_user {
     username String @unique
-    email String @unique
+    email    String @unique
     password String
 }
